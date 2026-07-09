@@ -73,21 +73,25 @@ promptInput.addEventListener("input",()=>{
    User Message
 -----------------------------*/
 
-function addUserMessage(text){
+function addBotMessage(text){
 
     const div=document.createElement("div");
 
-    div.className="message user";
+    div.className="message bot";
 
     div.innerHTML=`
 
-        <div class="bubble">
+        <div class="bot-avatar">
 
-            ${text}
+            <i class="fa-solid fa-robot"></i>
 
         </div>
 
-        <img src="assets/user-avatar.svg">
+        <div class="bubble">
+
+            ${text.replace(/\n/g,"<br>")}
+
+        </div>
 
     `;
 
@@ -275,26 +279,29 @@ clearBtn.addEventListener(
 
         localStorage.removeItem("chatHistory");
 
-        chatBox.innerHTML=`
+      chatBox.innerHTML=`
 
-        <div class="welcome">
+<div class="welcome">
 
-            <img src="assets/bot-avatar.svg">
+<div class="welcome-icon">
 
-            <h1>Hello 👋</h1>
+<i class="fa-solid fa-robot"></i>
 
-            <p>
+</div>
 
-            I'm your local AI assistant powered by Ollama.
+<h1>Hello 👋</h1>
 
-            Ask me anything.
+<p>
 
-            </p>
+I'm your local AI assistant powered by Ollama.
 
-        </div>
+Ask me anything.
 
-        `;
+</p>
 
+</div>
+
+`;
     }
 
 );
