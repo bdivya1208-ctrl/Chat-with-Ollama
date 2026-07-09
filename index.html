@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Ollama AI Chat</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="background">
+
+<div class="chat-app">
+
+<!-- ================= Sidebar ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <img src="assets/ollama-logo.svg">
+
+        <h2>Ollama</h2>
+
+    </div>
+
+    <button class="new-chat">
+
+        <i class="fa-solid fa-plus"></i>
+
+        New Chat
+
+    </button>
+
+    <div class="history">
+
+        <p>No conversations yet.</p>
+
+    </div>
+
+</aside>
+
+<!-- ================= Main ================= -->
+
+<div class="main">
+
+<header>
+
+<div class="title">
+
+<img src="assets/bot-avatar.svg">
+
+<div>
+
+<h2>Ollama Assistant</h2>
+
+<p>Running locally</p>
+
+</div>
+
+</div>
+
+<div class="actions">
+
+<select id="model">
+
+<option value="llama3">llama3</option>
+
+<option value="gemma3:1b">gemma3</option>
+
+<option value="mistral">mistral</option>
+
+<option value="phi3">phi3</option>
+
+</select>
+
+<button id="clear">
+
+<i class="fa-solid fa-trash"></i>
+
+</button>
+
+</div>
+
+</header>
+
+<!-- Chat -->
+
+<div id="chatBox">
+
+<div class="welcome">
+
+<img src="assets/bot-avatar.svg">
+
+<h1>Hello 👋</h1>
+
+<p>
+
+I'm your local AI assistant powered by Ollama.
+
+Ask me anything.
+
+</p>
+
+</div>
+
+</div>
+
+<!-- Loading -->
+
+<div id="typing" class="hidden">
+
+<div class="typing">
+
+<span></span>
+
+<span></span>
+
+<span></span>
+
+</div>
+
+</div>
+
+<!-- Input -->
+
+<div class="input-container">
+
+<textarea
+
+id="prompt"
+
+placeholder="Message Ollama..."
+
+rows="1"
+
+></textarea>
+
+<button id="send">
+
+<i class="fa-solid fa-paper-plane"></i>
+
+</button>
+
+</div>
+
+<p class="footer">
+
+AI responses may not always be accurate.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
