@@ -115,10 +115,6 @@ Sidebar
     margin-bottom:30px;
 }
 
-.logo img{
-
-    width:48px;
-}
 
 .logo h2{
 
@@ -224,13 +220,6 @@ header{
     gap:15px;
 
     align-items:center;
-}
-
-.title img{
-
-    width:48px;
-
-    border-radius:50%;
 }
 
 .title h2{
@@ -371,15 +360,6 @@ Messages
     gap:15px;
 
     animation:fade .3s ease;
-}
-
-.message img{
-
-    width:42px;
-
-    height:42px;
-
-    border-radius:50%;
 }
 
 .bubble{
@@ -617,5 +597,116 @@ Responsive
 
     max-width:90%;
 }
+
+}
+/* ===============================
+   LOGO
+================================== */
+
+.logo-icon{
+
+    width:58px;
+    height:58px;
+
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#4F8CFF,#7C4DFF);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:24px;
+
+    box-shadow:0 15px 35px rgba(79,140,255,.35);
+
+}
+
+/* ===============================
+BOT AVATAR
+================================== */
+
+.bot-avatar{
+
+    width:50px;
+    height:50px;
+
+    min-width:50px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#4F8CFF,#7C4DFF);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:20px;
+
+}
+
+/* ===============================
+USER AVATAR
+================================== */
+
+.user-avatar{
+
+    width:50px;
+    height:50px;
+
+    min-width:50px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#00C896,#00A8FF);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:18px;
+
+}
+
+/* ===============================
+WELCOME ICON
+================================== */
+
+.welcome-icon{
+
+    width:100px;
+    height:100px;
+
+    border-radius:50%;
+
+    margin:auto;
+
+    margin-bottom:25px;
+
+    background:linear-gradient(135deg,#4F8CFF,#7C4DFF);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:white;
+
+    font-size:45px;
+
+    box-shadow:0 25px 50px rgba(79,140,255,.35);
 
 }
