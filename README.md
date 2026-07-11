@@ -1,71 +1,106 @@
-# 🦙 Chat with Ollama
+# Chat with Ollama 🤖
 
-A modern AI chat application built using HTML, CSS and JavaScript that connects to a locally running Ollama model.
+A modern AI chat application that interacts with a locally running Ollama model. The application supports multi-turn conversations, message history, loading indicators, model selection, and clearing chat history.
 
 ## Features
 
-- Modern Glassmorphism UI
-- Local Ollama Integration
-- Conversation History
-- Loading Animation
-- Multiple Model Support
-- Auto Resize Input
-- Local Storage Chat History
-- Clear Chat
-- Responsive Design
+- 💬 Chat with a local Ollama model
+- 📝 Conversation history
+- 💾 Chat history saved using LocalStorage
+- ⏳ Loading indicator while AI generates responses
+- 🗑️ Clear chat functionality
+- ➕ New Chat button
+- 🤖 Model selection
+- 📱 Responsive user interface
+- ⌨️ Press Enter to send messages (Shift + Enter for a new line)
 
-## Technologies
+---
+
+## Technologies Used
 
 - HTML5
 - CSS3
-- JavaScript
-- Ollama API
+- JavaScript (ES6)
+- Ollama REST API
+- LocalStorage
+- Font Awesome
+- Google Fonts (Inter)
 
-## Requirements
+---
 
-Install Ollama
+## Prerequisites
 
-https://ollama.com
+Before running the project, install Ollama.
 
-Download a model
+Download:
+
+https://ollama.com/download
+
+Install a model:
 
 ```bash
 ollama pull llama3
 ```
 
-Start Ollama
+Start the Ollama server:
 
 ```bash
 ollama serve
 ```
 
-Open
+---
 
-```
-index.html
+## Running the Project
+
+1. Clone the repository.
+
+```bash
+git clone https://github.com/YOUR_USERNAME/Chat-with-Ollama.git
 ```
 
-or run using Live Server.
+2. Open the project folder.
 
-## API
+3. Launch the project using VS Code Live Server or any local web server.
 
-```
-http://localhost:11434/api/chat
-```
+4. Open the application in your browser.
+
+5. Make sure Ollama is running before sending messages.
+
+---
 
 ## Project Structure
 
 ```
-index.html
-style.css
-script.js
-README.md
+Chat-with-Ollama/
+│
+├── index.html
+├── style.css
+├── script.js
+└── README.md
 ```
+
+---
+
+## Notes
+
+This application communicates with a locally running Ollama server using:
+
+```
+http://127.0.0.1:11434/api/chat
+```
+
+Because Ollama runs locally, the AI chat functionality only works when the application is opened on your own computer with Ollama running.
+
+The GitHub Pages deployment demonstrates the user interface only and cannot communicate with a local Ollama server.
+
+---
 
 ## Demo
 
-The application allows users to chat with locally running AI models through Ollama.
+A demo video is included with the project submission.
+
+---
 
 ## Author
 
-Pradeep Singh
+Developed by **YOUR NAME**
