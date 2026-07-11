@@ -10,214 +10,175 @@ let history = JSON.parse(localStorage.getItem("chatHistory")) || [];
 /* ----------------------------
    Load Previous Chat
 -----------------------------*/
-
-window.onload = () => {
-
-    if(history.length === 0)
-        return;
+document.addEventListener("DOMContentLoaded", () => {
+    if (history.length === 0) return;
 
     chatBox.innerHTML = "";
 
     history.forEach(msg => {
-
-        if(msg.role === "user"){
-
+        if (msg.role === "user") {
             addUserMessage(msg.content);
-
-        }else{
-
+        } else {
             addBotMessage(msg.content);
-
         }
-
     });
-
-}
+});
 
 /* ----------------------------
    Save Chat
 -----------------------------*/
-
-function saveChat(){
-
-    localStorage.setItem(
-        "chatHistory",
-        JSON.stringify(history)
-    );
-
+function saveChat() {
+    localStorage.setItem("chatHistory", JSON.stringify(history));
 }
 
 /* ----------------------------
    Auto Scroll
 -----------------------------*/
-
-function scrollBottom(){
-
+function scrollBottom() {
     chatBox.scrollTop = chatBox.scrollHeight;
-
 }
 
 /* ----------------------------
    Auto Resize Textarea
 -----------------------------*/
-
-promptInput.addEventListener("input",()=>{
-
-    promptInput.style.height="auto";
-
-    promptInput.style.height=promptInput.scrollHeight+"px";
-
+promptInput.addEventListener("input", () => {
+    promptInput.style.height = "auto";
+    promptInput.style.height = promptInput.scrollHeight + "px";
 });
 
 /* ----------------------------
    User Message
 -----------------------------*/
+function addUserMessage(text) {
+    const div = document.createElement("div");
+    div.className = "message user";
 
-function addBotMessage(text){
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.textContent = text;
 
-    const div=document.createElement("div");
-
-    div.className="message bot";
-
-    div.innerHTML=`
-
-        <div class="bot-avatar">
-
-            <i class="fa-solid fa-robot"></i>
-
-        </div>
-
-        <div class="bubble">
-
-            ${text.replace(/\n/g,"<br>")}
-
-        </div>
-
-    `;
-
+    div.appendChild(bubble);
     chatBox.appendChild(div);
 
     scrollBottom();
-
 }
 
 /* ----------------------------
    Bot Message
 -----------------------------*/
+function addBotMessage(text) {
+    const div = document.createElement("div");
+    div.className = "message bot";
 
-function addBotMessage(text){
+    const avatar = document.createElement("div");
+    avatar.className = "bot-avatar";
+    avatar.innerHTML = `<i class="fa-solid fa-robot"></i>`;
 
-    const div=document.createElement("div");
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
 
-    div.className="message bot";
+    // Preserve line breaks safely
+    text.split("\n").forEach((line, index) => {
+        bubble.appendChild(document.createTextNode(line));
+        if (index < text.split("\n").length - 1) {
+            bubble.appendChild(document.createElement("br"));
+        }
+    });
 
-    div.innerHTML=`
-
-        <img src="assets/bot-avatar.svg">
-
-        <div class="bubble">
-
-            ${text.replace(/\n/g,"<br>")}
-
-        </div>
-
-    `;
+    div.appendChild(avatar);
+    div.appendChild(bubble);
 
     chatBox.appendChild(div);
 
     scrollBottom();
-
 }
 
 /* ----------------------------
    Send Message
 -----------------------------*/
+async function sendMessage() {
 
-async function sendMessage(){
+    const prompt = promptInput.value.trim();
 
-    const prompt=promptInput.value.trim();
+    if (prompt === "") return;
 
-    if(prompt==="")
-        return;
-
-    if(document.querySelector(".welcome"))
+    if (document.querySelector(".welcome")) {
         document.querySelector(".welcome").remove();
+    }
 
     addUserMessage(prompt);
 
     history.push({
-
-        role:"user",
-
-        content:prompt
-
+        role: "user",
+        content: prompt
     });
 
     saveChat();
 
-    promptInput.value="";
-
-    promptInput.style.height="auto";
+    promptInput.value = "";
+    promptInput.style.height = "auto";
 
     typing.classList.remove("hidden");
 
-    try{
+    sendBtn.disabled = true;
 
-        const response=await fetch(
-            "http://localhost:11434/api/chat",
-            {
+    try {
 
-                method:"POST",
+        const response = await fetch("http://localhost:11434/api/chat", {
 
-                headers:{
+            method: "POST",
 
-                    "Content-Type":"application/json"
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-                },
+            body: JSON.stringify({
 
-                body:JSON.stringify({
+                model: modelSelect.value,
 
-                    model:modelSelect.value,
+                messages: history,
 
-                    messages:history,
+                stream: false
 
-                    stream:false
+            })
 
-                })
+        });
 
-            }
+        if (!response.ok) {
+            throw new Error(`Server Error: ${response.status}`);
+        }
 
-        );
+        const data = await response.json();
 
-        const data=await response.json();
-
-        const reply=data.message.content;
-
-        typing.classList.add("hidden");
+        const reply =
+            data.message?.content ||
+            "No response received.";
 
         addBotMessage(reply);
 
         history.push({
 
-            role:"assistant",
+            role: "assistant",
 
-            content:reply
+            content: reply
 
         });
 
         saveChat();
 
-    }
+    } catch (err) {
 
-    catch(err){
+        console.error(err);
+
+        addBotMessage("❌ Unable to connect to Ollama. Make sure Ollama is running and the selected model is installed.");
+
+    } finally {
 
         typing.classList.add("hidden");
 
-        addBotMessage(
-            "❌ Unable to connect to Ollama."
-        );
+        sendBtn.disabled = false;
 
-        console.error(err);
+        promptInput.focus();
 
     }
 
@@ -226,82 +187,47 @@ async function sendMessage(){
 /* ----------------------------
    Send Button
 -----------------------------*/
-
-sendBtn.addEventListener(
-
-    "click",
-
-    sendMessage
-
-);
+sendBtn.addEventListener("click", sendMessage);
 
 /* ----------------------------
    Enter to Send
 -----------------------------*/
+promptInput.addEventListener("keydown", e => {
 
-promptInput.addEventListener(
+    if (e.key === "Enter" && !e.shiftKey) {
 
-    "keydown",
+        e.preventDefault();
 
-    e=>{
-
-        if(
-
-            e.key==="Enter"
-
-            &&
-
-            !e.shiftKey
-
-        ){
-
-            e.preventDefault();
-
-            sendMessage();
-
-        }
+        sendMessage();
 
     }
 
-);
+});
 
 /* ----------------------------
    Clear Chat
 -----------------------------*/
+clearBtn.addEventListener("click", () => {
 
-clearBtn.addEventListener(
+    history = [];
 
-    "click",
+    localStorage.removeItem("chatHistory");
 
-    ()=>{
+    chatBox.innerHTML = `
+        <div class="welcome">
+            <div class="welcome-icon">
+                <i class="fa-solid fa-robot"></i>
+            </div>
 
-        history=[];
+            <h1>Hello 👋</h1>
 
-        localStorage.removeItem("chatHistory");
+            <p>
+                I'm your local AI assistant powered by Ollama.
+                Ask me anything.
+            </p>
+        </div>
+    `;
 
-      chatBox.innerHTML=`
+    promptInput.focus();
 
-<div class="welcome">
-
-<div class="welcome-icon">
-
-<i class="fa-solid fa-robot"></i>
-
-</div>
-
-<h1>Hello 👋</h1>
-
-<p>
-
-I'm your local AI assistant powered by Ollama.
-
-Ask me anything.
-
-</p>
-
-</div>
-
-`;
-    }
-
-);
+});
